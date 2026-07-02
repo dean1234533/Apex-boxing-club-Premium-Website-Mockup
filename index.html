@@ -515,6 +515,153 @@
       white-space: nowrap;
     }
 
+    .booking {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .booking-wrap {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .booking-intro {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 8px;
+      padding: 32px;
+      position: sticky;
+      top: 100px;
+    }
+
+    .booking-intro p {
+      color: var(--muted);
+    }
+
+    .booking-points {
+      display: grid;
+      gap: 12px;
+      padding: 0;
+      margin: 26px 0 0;
+      list-style: none;
+    }
+
+    .booking-points li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: #e8e8e8;
+      font-weight: 700;
+    }
+
+    .booking-points svg {
+      color: var(--red-strong);
+      flex: 0 0 auto;
+      margin-top: 2px;
+    }
+
+    .booking-card {
+      border: 1px solid var(--line);
+      background: var(--white);
+      color: var(--black);
+      border-radius: 8px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .booking-card h3 {
+      color: var(--black);
+      margin-bottom: 18px;
+    }
+
+    .plan-toggle {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .plan-option input,
+    .booking-choice input,
+    .day-choice input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .plan-option span,
+    .booking-choice span,
+    .day-choice span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      border: 1px solid #d6d6d6;
+      border-radius: 6px;
+      background: #f7f7f7;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-align: center;
+      padding: 10px 12px;
+    }
+
+    .plan-option input:checked + span,
+    .booking-choice input:checked + span,
+    .day-choice input:checked + span {
+      color: var(--white);
+      background: var(--red-strong);
+      border-color: var(--red-strong);
+    }
+
+    .booking-group {
+      margin-top: 20px;
+    }
+
+    .booking-group > label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .booking-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .day-options {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .booking-summary {
+      margin-top: 22px;
+      padding: 18px;
+      border-radius: 8px;
+      background: #f3f3f3;
+      border: 1px solid #dddddd;
+      color: #343434;
+      font-weight: 650;
+    }
+
+    .booking-summary strong {
+      display: block;
+      color: var(--black);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    .booking-card .section-actions {
+      margin-top: 22px;
+    }
+
     .training {
       background:
         linear-gradient(90deg, rgba(0,0,0,.9), rgba(0,0,0,.68), rgba(0,0,0,.3)),
@@ -876,6 +1023,7 @@
       .section-head,
       .about-wrap,
       .timetable-wrap,
+      .booking-wrap,
       .training-grid,
       .community-grid,
       .contact-grid {
@@ -885,6 +1033,7 @@
       .about-media,
       .community-photo { min-height: 410px; }
       .timetable-panel { position: static; }
+      .booking-intro { position: static; }
       .day-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .session { grid-template-columns: 1fr; gap: 10px; }
       .session .tag { justify-self: start; }
@@ -911,9 +1060,11 @@
       .class-grid,
       .footer-grid,
       .feature-list,
+      .booking-options,
       .form {
         grid-template-columns: 1fr;
       }
+      .day-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .field.full { grid-column: auto; }
       .benefit { min-height: 150px; }
       .class-card { min-height: 300px; }
@@ -950,6 +1101,7 @@
       <nav class="nav-links" id="navLinks" aria-label="Primary navigation">
         <a href="#classes">Classes</a>
         <a href="#timetable">Timetable</a>
+        <a href="#booking">Book Sessions</a>
         <a href="#training">Personal Training</a>
         <a href="#community">Community</a>
         <a href="#contact">Contact</a>
@@ -1097,49 +1249,84 @@
           <h2>Find your next session fast.</h2>
           <p>Scan the weekly class structure, choose the right level, then book or enquire. The timetable is designed to be easy to read on mobile, so class times stay clear wherever visitors are browsing.</p>
           <div class="day-tabs" role="tablist" aria-label="Timetable days">
-            <button class="active" type="button">Mon</button>
-            <button type="button">Tue</button>
-            <button type="button">Wed</button>
-            <button type="button">Thu</button>
+            <button class="active" type="button" data-day="mon">Mon</button>
+            <button type="button" data-day="tue">Tue</button>
+            <button type="button" data-day="wed">Wed</button>
+            <button type="button" data-day="thu">Thu</button>
           </div>
         </div>
 
         <div class="schedule-list">
-          <article class="session">
-            <div class="time">10:00</div>
-            <div>
-              <h3>Classic Boxing</h3>
-              <p>Technique, bag work, movement, and coached combinations.</p>
-            </div>
-            <span class="tag">All levels</span>
-          </article>
-          <article class="session">
-            <div class="time">17:15</div>
-            <div>
-              <h3>Junior Boxing Foundations</h3>
-              <p>Junior-friendly coaching focused on discipline, fitness, and confidence.</p>
-            </div>
-            <span class="tag">5 to 11</span>
-          </article>
-          <article class="session">
-            <div class="time">18:20</div>
-            <div>
-              <h3>Women Only EmpowerFit</h3>
-              <p>Boxing fitness, strength rounds, and skill development in a supportive setting.</p>
-            </div>
-            <span class="tag">Women</span>
-          </article>
-          <article class="session">
-            <div class="time">19:30</div>
-            <div>
-              <h3>Boxing Conditioning</h3>
-              <p>Hard-working circuits, bag rounds, core strength, and endurance.</p>
-            </div>
-            <span class="tag">Fitness</span>
-          </article>
+          <div id="sessionList"></div>
           <div class="section-actions">
-            <a class="btn btn-primary" href="#contact"><i data-lucide="send"></i>Book or Enquire</a>
+            <a class="btn btn-primary" href="#booking"><i data-lucide="send"></i>Book Sessions</a>
             <a class="btn btn-dark" href="#classes">Compare Classes</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="booking" id="booking">
+      <div class="container booking-wrap">
+        <div class="booking-intro">
+          <div class="eyebrow">Session booking</div>
+          <h2>Book your week or month of training.</h2>
+          <p>Let clients plan ahead by choosing a weekly or monthly block, selecting the sessions they want, and sending the request straight to the team.</p>
+          <ul class="booking-points">
+            <li><i data-lucide="calendar-days"></i>Reserve regular weekly class spots</li>
+            <li><i data-lucide="calendar-range"></i>Plan a full month of training in advance</li>
+            <li><i data-lucide="clipboard-check"></i>Share preferred days, session types, and notes</li>
+          </ul>
+        </div>
+
+        <div class="booking-card">
+          <h3>Training plan request</h3>
+          <div class="plan-toggle" aria-label="Choose booking length">
+            <label class="plan-option">
+              <input type="radio" name="booking-plan" value="Weekly sessions" checked>
+              <span>Book a Week</span>
+            </label>
+            <label class="plan-option">
+              <input type="radio" name="booking-plan" value="Monthly sessions">
+              <span>Book a Month</span>
+            </label>
+          </div>
+
+          <div class="booking-group">
+            <label>Session types</label>
+            <div class="booking-options">
+              <label class="booking-choice"><input type="checkbox" value="Classic Boxing" checked><span>Classic Boxing</span></label>
+              <label class="booking-choice"><input type="checkbox" value="Beginners Boxing"><span>Beginners Boxing</span></label>
+              <label class="booking-choice"><input type="checkbox" value="Women's Boxing"><span>Women's Boxing</span></label>
+              <label class="booking-choice"><input type="checkbox" value="Youth Boxing"><span>Youth Boxing</span></label>
+              <label class="booking-choice"><input type="checkbox" value="Boxing Conditioning"><span>Conditioning</span></label>
+              <label class="booking-choice"><input type="checkbox" value="Personal Training"><span>Personal Training</span></label>
+            </div>
+          </div>
+
+          <div class="booking-group">
+            <label>Preferred days</label>
+            <div class="day-options">
+              <label class="day-choice"><input type="checkbox" value="Monday" checked><span>Mon</span></label>
+              <label class="day-choice"><input type="checkbox" value="Tuesday"><span>Tue</span></label>
+              <label class="day-choice"><input type="checkbox" value="Wednesday"><span>Wed</span></label>
+              <label class="day-choice"><input type="checkbox" value="Thursday"><span>Thu</span></label>
+            </div>
+          </div>
+
+          <div class="booking-group">
+            <label for="booking-notes">Extra notes</label>
+            <textarea id="booking-notes" placeholder="Preferred times, number of sessions, goals, or anything the team should know"></textarea>
+          </div>
+
+          <div class="booking-summary" id="bookingSummary">
+            <strong>Current request</strong>
+            Weekly sessions: Classic Boxing on Monday.
+          </div>
+
+          <div class="section-actions">
+            <button class="btn btn-primary" id="sendBookingRequest" type="button"><i data-lucide="calendar-check"></i>Send Booking Request</button>
+            <a class="btn btn-dark" href="#timetable">Check Timetable</a>
           </div>
         </div>
       </div>
@@ -1275,6 +1462,7 @@
                 <option>Personal Training</option>
                 <option>Youth Boxing</option>
                 <option>Membership</option>
+                <option>Weekly / Monthly Session Booking</option>
               </select>
             </div>
             <div class="field full">
@@ -1305,6 +1493,7 @@
           <ul>
             <li><a href="#classes">Classes</a></li>
             <li><a href="#timetable">Timetable</a></li>
+            <li><a href="#booking">Book Sessions</a></li>
             <li><a href="#training">Personal Training</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
@@ -1351,12 +1540,96 @@
       });
     });
 
+    const timetable = {
+      mon: [
+        { time: "10:00", title: "Classic Boxing", details: "Technique, bag work, movement, and coached combinations.", tag: "All levels" },
+        { time: "17:15", title: "Junior Boxing Foundations", details: "Junior-friendly coaching focused on discipline, fitness, and confidence.", tag: "5 to 11" },
+        { time: "18:20", title: "Women's Boxing", details: "Boxing fitness, strength rounds, and skill development in a supportive setting.", tag: "Women" },
+        { time: "19:30", title: "Boxing Conditioning", details: "Hard-working circuits, bag rounds, core strength, and endurance.", tag: "Fitness" }
+      ],
+      tue: [
+        { time: "07:00", title: "Early Rounds", details: "Fast-paced bag work, skipping, core, and sharp morning conditioning.", tag: "Fitness" },
+        { time: "12:30", title: "Lunch Pad Skills", details: "Short technical session for footwork, defence, and accurate combinations.", tag: "Technique" },
+        { time: "18:00", title: "Beginners Boxing", details: "Learn stance, guard, basic punches, and movement with calm coaching.", tag: "Beginner" },
+        { time: "19:15", title: "Adult Boxing Skills", details: "Progressive drills, partner work, and controlled technical rounds.", tag: "Adults" }
+      ],
+      wed: [
+        { time: "09:30", title: "Boxing Fitness", details: "High-energy rounds combining bags, bodyweight training, and core work.", tag: "All levels" },
+        { time: "16:45", title: "Youth Boxing", details: "Safe coaching for coordination, discipline, teamwork, and confidence.", tag: "Youth" },
+        { time: "18:30", title: "Personal Training Blocks", details: "Focused one-to-one coaching slots for technique and tailored fitness.", tag: "1:1" },
+        { time: "20:00", title: "Advanced Skills", details: "Sharper footwork, defensive reactions, combinations, and ring craft.", tag: "Advanced" }
+      ],
+      thu: [
+        { time: "10:00", title: "Classic Boxing", details: "Technical fundamentals, bag rounds, and structured coaching.", tag: "All levels" },
+        { time: "17:30", title: "Junior Boxing Foundations", details: "Fun, safe boxing basics for younger members building confidence.", tag: "5 to 11" },
+        { time: "18:45", title: "Group Class Pass Session", details: "Flexible group training with mixed drills, bags, and conditioning.", tag: "Passes" },
+        { time: "20:00", title: "Strength & Conditioning", details: "Fitness circuits, power rounds, core, and endurance finishers.", tag: "Strength" }
+      ]
+    };
+
+    const sessionList = document.querySelector("#sessionList");
+
+    function renderSessions(day) {
+      sessionList.innerHTML = timetable[day].map((session) => `
+        <article class="session">
+          <div class="time">${session.time}</div>
+          <div>
+            <h3>${session.title}</h3>
+            <p>${session.details}</p>
+          </div>
+          <span class="tag">${session.tag}</span>
+        </article>
+      `).join("");
+    }
+
     document.querySelectorAll(".day-tabs button").forEach((button) => {
       button.addEventListener("click", () => {
         document.querySelectorAll(".day-tabs button").forEach((item) => item.classList.remove("active"));
         button.classList.add("active");
+        renderSessions(button.dataset.day);
       });
     });
+
+    renderSessions("mon");
+
+    const bookingSummary = document.querySelector("#bookingSummary");
+    const bookingNotes = document.querySelector("#booking-notes");
+
+    function checkedValues(selector) {
+      return Array.from(document.querySelectorAll(selector))
+        .filter((input) => input.checked)
+        .map((input) => input.value);
+    }
+
+    function bookingRequestText() {
+      const plan = document.querySelector('input[name="booking-plan"]:checked').value;
+      const sessions = checkedValues(".booking-choice input");
+      const days = checkedValues(".day-choice input");
+      const notes = bookingNotes.value.trim();
+      const sessionText = sessions.length ? sessions.join(", ") : "No session types selected";
+      const dayText = days.length ? days.join(", ") : "No preferred days selected";
+      return `${plan}: ${sessionText} on ${dayText}.${notes ? ` Notes: ${notes}` : ""}`;
+    }
+
+    function updateBookingSummary() {
+      bookingSummary.innerHTML = `<strong>Current request</strong>${bookingRequestText()}`;
+    }
+
+    document.querySelectorAll('input[name="booking-plan"], .booking-choice input, .day-choice input').forEach((input) => {
+      input.addEventListener("change", updateBookingSummary);
+    });
+
+    bookingNotes.addEventListener("input", updateBookingSummary);
+
+    document.querySelector("#sendBookingRequest").addEventListener("click", () => {
+      const message = document.querySelector("#message");
+      const interest = document.querySelector("#interest");
+      interest.value = "Weekly / Monthly Session Booking";
+      message.value = bookingRequestText();
+      document.querySelector("#contact").scrollIntoView({ behavior: "smooth" });
+    });
+
+    updateBookingSummary();
 
     document.querySelector(".form").addEventListener("submit", (event) => {
       event.preventDefault();
